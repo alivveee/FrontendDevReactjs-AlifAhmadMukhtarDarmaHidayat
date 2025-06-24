@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useFilterStore } from "../store/useFilterStore";
+import { MdSearch } from "react-icons/md";
 
 const prices = [
   { id: "all", name: "All Prices" },
@@ -16,7 +17,6 @@ const Header = () => {
   const { isOpen, price, setSearch, setPrice, setOpen } = useFilterStore();
   const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
 
-  // Apply params from URL on first load
   useEffect(() => {
     const q = searchParams.get("q") || "";
     const open = searchParams.get("open") === "1";
@@ -28,7 +28,6 @@ const Header = () => {
     setPrice(price);
   }, []);
 
-  // Debounce search + sync to URL
   useEffect(() => {
     const delay = setTimeout(() => {
       setSearch(searchInput);
@@ -46,9 +45,10 @@ const Header = () => {
 
   return (
     <div className="flex flex-col gap-2 bg-white">
-      <div className="flex-1 flex flex-col gap-4 px-16 py-4">
-        <h1 className="text-4xl text-gray-900">Restaurants</h1>
-        <p className="text-gray-600">
+      {/* Header Text */}
+      <div className="flex-1 flex flex-col gap-4 px-4 py-4 md:px-16">
+        <h1 className="text-2xl md:text-4xl text-gray-900">Restaurants</h1>
+        <p className="text-gray-600 text-sm md:text-base">
           Discover a wide selection of the best restaurants from across
           Indonesia. We provide complete information including restaurant names,
           locations, ratings, and customer reviews to help you choose the right
@@ -56,10 +56,14 @@ const Header = () => {
         </p>
       </div>
 
-      <div className="flex justify-between border-y px-16 py-4">
-        <div className="flex gap-5 items-center">
-          Filter By:
-          <div className="flex items-center gap-1 border-b-[1.5px] border-gray-300">
+      {/* Filters */}
+      <div className="flex flex-col gap-4 border-y px-4 py-4 md:px-16 md:flex-row md:justify-between md:items-center">
+        {/* Left Filter Group */}
+        <div className="flex flex-col gap-3 md:flex-row md:gap-5 md:items-center">
+          <span className="font-medium text-sm text-gray-700">Filter By:</span>
+
+          {/* Open Now */}
+          <div className="flex items-center w-fit gap-1 border-b border-gray-300 text-sm">
             <input
               type="radio"
               id="open-now"
@@ -68,9 +72,11 @@ const Header = () => {
             />
             <label htmlFor="open-now">Open Now</label>
           </div>
-          <div className="flex items-center gap-2">
+
+          {/* Price Dropdown */}
+          <div className="w-fit border-b border-gray-300 text-sm">
             <select
-              className="border-b-[1.5px] border-gray-300"
+              className="px-1 py-[2px]"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             >
@@ -81,19 +87,23 @@ const Header = () => {
               ))}
             </select>
           </div>
-          <div className="flex items-center gap-2 w-[280px]">
+
+          {/* Search Input */}
+          <div className="w-full md:w-[290px] flex items-center gap-2 border-b border-gray-300 focus-within:border-blue-500">
             <input
               type="text"
               placeholder="Search by name, category, or menu"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="border-b-[1.5px] border-gray-300 focus:outline-none focus:border-blue-500 transition-colors px-2 py-1 w-full text-sm text-gray-700 placeholder:text-gray-400"
+              className="focus:outline-none px-2 py-1 w-full text-sm text-gray-700 placeholder:text-gray-400"
             />
+            <MdSearch className="text-lg" />
           </div>
         </div>
 
+        {/* Clear Button */}
         <button
-          className="border border-gray-400 px-3 py-1 text-gray-500"
+          className="border border-gray-400 text-sm px-3 py-1 text-gray-500 self-start md:self-auto w-fit"
           onClick={() => {
             setSearchInput("");
             setSearch("");

@@ -24,7 +24,7 @@ const HomePage = () => {
   return (
     <div>
       <Header />
-      <div className="flex flex-col gap-4 px-16 py-12">
+      <div className="flex flex-col gap-4 px-4 md:px-16 py-12">
         <h1 className="text-2xl text-gray-800">All Restaurants</h1>
 
         {loading && (
@@ -47,7 +47,7 @@ const HomePage = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-4 gap-4 mt-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2">
           {visibleRestaurants.map((restaurant) => (
             <RestaurantItem key={restaurant.id} {...restaurant} />
           ))}
