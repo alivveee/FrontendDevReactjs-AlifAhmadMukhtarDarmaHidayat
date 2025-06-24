@@ -55,7 +55,7 @@ const DetailPage = () => {
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold text-gray-800">Reviews</h2>
         <div className="flex flex-col gap-6">
-          {data.customerReviews?.length && (
+          {data.customerReviews?.length === 0 && (
             <p className="text-gray-500 w-full text-center">No reviews yet.</p>
           )}
           {data.customerReviews?.map((review, index) => (
